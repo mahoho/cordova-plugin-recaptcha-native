@@ -1,0 +1,24 @@
+{
+  "name": "cordova-plugin-recaptcha-native",
+  "version": "1.0.0",
+  "description": "Cordova plugin for native integration of Google reCAPTCHA using the official native SDKs for Android and iOS.",
+  "cordova": {
+    "id": "cordova-plugin-recaptcha-native",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "keywords": [
+    "cordova",
+    "plugin",
+    "recaptcha",
+    "google",
+    "native",
+    "android",
+    "ios"
+  ],
+  "author": "Oleksii Ratnykov",
+  "license": "MIT"
+}
+
