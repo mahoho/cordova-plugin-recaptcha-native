@@ -1,42 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin id="cordova-plugin-recaptcha-native" version="1.0.0" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
   <name>cordova-plugin-recaptcha-native</name>
-  <description>Cordova plugin for native integration of Google reCAPTCHA using the official native SDKs for Android and iOS.</description>
+  <description>Cordova plugin for native integration of Google reCAPTCHA using the official native SDKs for Android and iOS. The site keys are provided via config.xml.</description>
   <license>MIT</license>
   <keywords>cordova,plugin,recaptcha,google,native,android,ios</keywords>
   <engines>
     <engine name="cordova" version=">=9.0.0" />
   </engines>
-  
+
+  <!-- Define plugin variables for the site keys -->
+  <variable name="ANDROID_SITE_KEY" value="your_android_site_key_here" />
+  <variable name="IOS_SITE_KEY" value="your_ios_site_key_here" />
+
   <!-- JavaScript module definition -->
   <js-module src="www/recaptcha.js" name="recaptcha">
-    <clobbers target="recaptcha" />
+    <clobbers target="cordova.plugins.recaptcha" />
   </js-module>
-  
+
   <!-- Android platform configuration -->
   <platform name="android">
-    <!-- Add the official reCAPTCHA dependency to Gradle -->
-    <framework src="com.google.android.gms:play-services-recaptcha:16.0.0" type="gradle" />
-    
+    <podspec>
+      <pods>
+        <pod name="com.google.android.recaptcha:recaptcha" type="gradle" spec="18.7.0-beta01" />
+      </pods>
+    </podspec>
+
     <config-file target="res/xml/config.xml" parent="/*">
-      <feature name="Recaptcha">
-        <param name="android-package" value="com.example.recaptcha.Recaptcha" />
+      <feature name="RecaptchaNative">
+        <param name="android-package" value="com.example.recaptcha.RecaptchaNative" />
       </feature>
     </config-file>
-    <source-file src="src/android/Recaptcha.java" target-dir="src/com/example/recaptcha" />
+    <source-file src="src/android/RecaptchaNative.java" target-dir="src/com/example/recaptcha" />
+    <framework src="src/android/recaptcha-native-build.gradle" custom="true" type="gradleReference" />
+    <hook type="after_platform_add" src="scripts/modifyMainActivity.js" />
   </platform>
-  
+
   <!-- iOS platform configuration -->
   <platform name="ios">
-    <!-- Add the native reCAPTCHA Enterprise SDK pod dependency -->
-    <pod name="GoogleReCaptchaEnterprise" spec="~> 1.0" />
-    
+    <podspec>
+      <config>
+        <source url="https://github.com/CocoaPods/Specs.git"/>
+      </config>
+      <pods use-frameworks="true">
+        <pod name="RecaptchaEnterprise" type="podspec" spec="~> 18.7.0" />
+      </pods>
+    </podspec>
+
     <config-file target="config.xml" parent="/*">
-      <feature name="Recaptcha">
-        <param name="ios-package" value="Recaptcha" />
+      <feature name="RecaptchaNative">
+        <param name="ios-package" value="RecaptchaNative" />
       </feature>
     </config-file>
-    <source-file src="src/ios/Recaptcha.swift" />
+    <source-file src="src/ios/RecaptchaNative.swift" />
   </platform>
 </plugin>
-
