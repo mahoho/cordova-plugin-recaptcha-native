@@ -1,10 +1,7 @@
 .idea
 *.iml.idea
-*.iml.idea
-*.iml.idea
-*.iml.idea
-*.iml.idea
-*.iml.idea
-*.iml.idea
-*.iml.idea
 *.iml
+.DS_Store
+._.DS_Store
+**/.DS_Store
+**/._.DS_Store
